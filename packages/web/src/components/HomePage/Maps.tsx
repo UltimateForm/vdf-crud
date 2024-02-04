@@ -61,7 +61,8 @@ interface IMapProps {
 	}[];
 	onSelect: (id: string) => void;
 }
-
+// place in config file
+const APIKEY = "";
 export default function Maps(props: IMapProps) {
 	const { markers, onSelect } = props;
 	const defaultProps = {
@@ -71,12 +72,11 @@ export default function Maps(props: IMapProps) {
 		},
 		zoom: 11,
 	};
-	const apikey = "";
 	const markerRefs = React.useRef<IMarkerElement[]>([]);
 	return (
 		<div style={{ height: "60vh", width: "100%" }}>
 			<GoogleMapReact
-				bootstrapURLKeys={{ key: apikey }}
+				bootstrapURLKeys={{ key: APIKEY }}
 				defaultCenter={defaultProps.center}
 				defaultZoom={defaultProps.zoom}
 				center={{ lat: 38.7028462, lng: -9.1232281 }}
