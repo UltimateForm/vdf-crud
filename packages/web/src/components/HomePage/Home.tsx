@@ -25,18 +25,18 @@ export default function Home({}) {
 						"absolute inset-0 bg-black bg-opacity-50 flex transition-opacity ease-in-out",
 						Boolean(detailsId)
 							? "opacity-100 pointer-events-auto"
-							: "opacity-0 pointer-events-none",
+							: "opacity-0 pointer-events-none"
 					)}
 					onClick={() => setDetailsId("")}
 				>
 					<DetailsView
 						onClickClose={() => setDetailsId("")}
 						device={deviceListData?.items?.find(
-							(device) => device.userId == detailsId,
+							(device) => device.userId == detailsId
 						)}
 					/>
 				</div>,
-				document.body,
+				document.body
 			)}
 			<Maps
 				onSelect={(id) => {
@@ -48,7 +48,7 @@ export default function Home({}) {
 						latitude: dev.latitude,
 						longitude: dev.longitude,
 						id: dev.userId,
-						name: dev.firstName,
+						name: dev.firstName
 					}))}
 			/>
 		</div>

@@ -20,7 +20,7 @@ test("renders proper menu controls for table", () => {
 			onClickAdd={() => {
 				//ignore
 			}}
-		/>,
+		/>
 	);
 	const pageDescriptor = screen.getByTestId("pageDescriptor");
 	// because if we're skipping 20, and limiting 10, and total is 50, we must be on page 3 (31-40) of total 5 pages

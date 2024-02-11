@@ -15,7 +15,7 @@ export default function Topbar() {
 					<a
 						href="/"
 						className={classNames({
-							"underline font-semibold": location.pathname == "/",
+							"underline font-semibold": location.pathname == "/"
 						})}
 					>
 						Home
@@ -23,7 +23,7 @@ export default function Topbar() {
 					<a
 						href="/devices"
 						className={classNames({
-							"underline font-semibold": location.pathname == "/devices",
+							"underline font-semibold": location.pathname == "/devices"
 						})}
 					>
 						Devices
@@ -36,7 +36,7 @@ export default function Topbar() {
 							height: "2sem",
 							verticalAlign: "middle",
 							fill: "currentColor",
-							overflow: "hidden",
+							overflow: "hidden"
 						}}
 						viewBox="0 0 1024 1024"
 						version="1.1"

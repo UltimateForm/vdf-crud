@@ -8,7 +8,7 @@ export function calculateCenter(vectorA: Vector2, vectorB: Vector2): Vector2 {
 	const yDiff = vectorB.y - vectorA.y;
 	const vectorCenter: Vector2 = {
 		x: vectorA.x + xDiff / 2,
-		y: vectorB.y + yDiff / 2,
+		y: vectorB.y + yDiff / 2
 	};
 	return vectorCenter;
 }

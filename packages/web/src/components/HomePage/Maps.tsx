@@ -62,15 +62,15 @@ interface IMapProps {
 	onSelect: (id: string) => void;
 }
 // place in config file
-const APIKEY = "";
+const APIKEY = import.meta.env.VITE_GMAPS_KEY;
 export default function Maps(props: IMapProps) {
 	const { markers, onSelect } = props;
 	const defaultProps = {
 		center: {
 			lat: 10.99835602,
-			lng: 77.01502627,
+			lng: 77.01502627
 		},
-		zoom: 11,
+		zoom: 11
 	};
 	const markerRefs = React.useRef<IMarkerElement[]>([]);
 	return (

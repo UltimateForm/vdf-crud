@@ -1,29 +1,33 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ICursor, IDevice, IPaginationBase, RequestState } from "types";
 import axios from "axios";
 
-export const getDeviceList = createAsyncThunk<
+export const getDeviceList: AsyncThunk<
 	ICursor<IDevice>,
-	IPaginationBase
->("devices/list", async (request, { rejectWithValue }) => {
-	try {
-		// const apiUrl = process.env.NODE_ENV;
-		const apiUrl = "http://localhost:7000";
-		const params = {
-			skip: request.skip,
-		};
-		if (request.limit) {
-			params["limit"] = request.limit;
+	IPaginationBase,
+	any
+> = createAsyncThunk<ICursor<IDevice>, IPaginationBase>(
+	"devices/list",
+	async (request, { rejectWithValue }) => {
+		try {
+			// const apiUrl = process.env.NODE_ENV;
+			const apiUrl = "http://localhost:7000";
+			const params = {
+				skip: request.skip
+			};
+			if (request.limit) {
+				params["limit"] = request.limit;
+			}
+			const response = await axios.get<ICursor<IDevice>>(`${apiUrl}/devices`, {
+				params
+			});
+			const data = response.data;
+			return data;
+		} catch (error) {
+			return rejectWithValue(error);
 		}
-		const response = await axios.get<ICursor<IDevice>>(`${apiUrl}/devices`, {
-			params,
-		});
-		const data = response.data;
-		return data;
-	} catch (error) {
-		return rejectWithValue(error);
 	}
-});
+);
 
 export interface IDeviceListState {
 	status: RequestState;
@@ -38,8 +42,8 @@ export const deviceListSlice = createSlice({
 		status: "iddle",
 		request: {
 			limit: 10,
-			skip: 0,
-		},
+			skip: 0
+		}
 	} as IDeviceListState,
 	reducers: {},
 	extraReducers: (builder) => {
@@ -57,7 +61,7 @@ export const deviceListSlice = createSlice({
 			state.data = undefined;
 			state.error = action.payload;
 		});
-	},
+	}
 });
 
 export default deviceListSlice.reducer;

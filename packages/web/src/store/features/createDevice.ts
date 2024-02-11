@@ -1,21 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { IDevice, RequestState } from "types";
 import axios from "axios";
 
-export const createDevice = createAsyncThunk<IDevice, IDevice>(
-	"devices/create",
-	async (request, { rejectWithValue }) => {
-		try {
-			// const apiUrl = process.env.NODE_ENV;
-			const apiUrl = "http://localhost:7000";
-			const response = await axios.post<IDevice>(`${apiUrl}/devices`, request);
-			const data = response.data;
-			return data;
-		} catch (error) {
-			return rejectWithValue(error);
-		}
-	},
-);
+export const createDevice: AsyncThunk<IDevice, IDevice, any> = createAsyncThunk<
+	IDevice,
+	IDevice
+>("devices/create", async (request, { rejectWithValue }) => {
+	try {
+		// const apiUrl = process.env.NODE_ENV;
+		const apiUrl = "http://localhost:7000";
+		const response = await axios.post<IDevice>(`${apiUrl}/devices`, request);
+		const data = response.data;
+		return data;
+	} catch (error) {
+		return rejectWithValue(error);
+	}
+});
 
 export interface ICreateDeviceState {
 	status: RequestState;
@@ -27,7 +27,7 @@ export interface ICreateDeviceState {
 export const createDeviceSlice = createSlice({
 	name: "createDevice",
 	initialState: {
-		status: "iddle",
+		status: "iddle"
 	} as ICreateDeviceState,
 	reducers: {},
 	extraReducers: (builder) => {
@@ -45,7 +45,7 @@ export const createDeviceSlice = createSlice({
 			state.data = undefined;
 			state.error = action.payload;
 		});
-	},
+	}
 });
 
 export default createDeviceSlice.reducer;

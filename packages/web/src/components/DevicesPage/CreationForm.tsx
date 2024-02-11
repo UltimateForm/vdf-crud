@@ -7,7 +7,7 @@ import { IDevice } from "types";
 // import classNames from "classnames";
 
 function TextInputField(
-	props: FieldRenderProps<any, HTMLElement, any> & { label: string },
+	props: FieldRenderProps<any, HTMLElement, any> & { label: string }
 ) {
 	const { input, meta, label } = props;
 	return (
@@ -15,7 +15,7 @@ function TextInputField(
 			<label
 				className={classNames(
 					"text-xs font-medium transition-opacity ease-in-out",
-					input.value ? "opacity-100" : "opacity-0",
+					input.value ? "opacity-100" : "opacity-0"
 				)}
 			>
 				{label}
@@ -32,7 +32,7 @@ function TextInputField(
 }
 
 function TextAreaInputField(
-	props: FieldRenderProps<any, HTMLElement, any> & { label: string },
+	props: FieldRenderProps<any, HTMLElement, any> & { label: string }
 ) {
 	const { input, meta, label } = props;
 	return (
@@ -40,7 +40,7 @@ function TextAreaInputField(
 			<label
 				className={classNames(
 					"text-xs font-medium transition-opacity ease-in-out",
-					input.value ? "opacity-100" : "opacity-0",
+					input.value ? "opacity-100" : "opacity-0"
 				)}
 			>
 				{label}
@@ -60,7 +60,7 @@ function SelectInputField(
 	props: FieldRenderProps<any, HTMLElement, any> & {
 		label: string;
 		options: string[];
-	},
+	}
 ) {
 	const { input, meta, label, options } = props;
 	return (

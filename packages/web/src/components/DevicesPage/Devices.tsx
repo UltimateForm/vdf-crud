@@ -21,7 +21,7 @@ const TABLE_HEAD = [
 	"Parent Org",
 	"Role",
 	"Type",
-	"Phone Number",
+	"Phone Number"
 ];
 
 function DeviceRow(props: {
@@ -67,7 +67,7 @@ export default function Devices() {
 			if (delta == -1 && itemSkip - pageSize < 0) return;
 			setItemSkip((curr) => curr + pageSize * delta);
 		},
-		[deviceListData, pageSize, itemSkip],
+		[deviceListData, pageSize, itemSkip]
 	);
 	const submitDevice = React.useCallback(
 		async (values: IDevice) => {
@@ -76,7 +76,7 @@ export default function Devices() {
 			setCreationFormOpen(false);
 			await dispatch(getDeviceList({ limit: pageSize, skip: itemSkip }));
 		},
-		[pageSize, itemSkip],
+		[pageSize, itemSkip]
 	);
 	return (
 		<div className="p-2 w-full bg-white my-2 card rounded-md grid-flow-row gap-3 relative">
@@ -98,7 +98,7 @@ export default function Devices() {
 						"absolute inset-0 bg-black bg-opacity-50 flex transition-opacity ease-in-out",
 						creationFormOpen
 							? "opacity-100 pointer-events-auto"
-							: "opacity-0 pointer-events-none",
+							: "opacity-0 pointer-events-none"
 					)}
 					onClick={() => setCreationFormOpen(false)}
 				>
@@ -107,26 +107,26 @@ export default function Devices() {
 						onSubmit={submitDevice}
 					/>
 				</div>,
-				document.body,
+				document.body
 			)}
 			{createPortal(
 				<div
 					className={classNames(
 						"absolute inset-0 bg-black bg-opacity-50 flex transition-opacity ease-in-out",
-						Boolean(detailsId)
+						detailsId
 							? "opacity-100 pointer-events-auto"
-							: "opacity-0 pointer-events-none",
+							: "opacity-0 pointer-events-none"
 					)}
 					onClick={() => setDetailsId("")}
 				>
 					<DetailsView
 						onClickClose={() => setDetailsId("")}
 						device={deviceListData?.items.find(
-							(device) => device.userId == detailsId,
+							(device) => device.userId == detailsId
 						)}
 					/>
 				</div>,
-				document.body,
+				document.body
 			)}
 			<TableMenu
 				limit={deviceListData?.limit ?? 0}

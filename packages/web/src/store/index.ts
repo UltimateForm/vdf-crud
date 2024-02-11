@@ -5,8 +5,8 @@ import createDevice from "./features/createDevice";
 export const store = configureStore({
 	reducer: {
 		deviceList,
-		createDevice,
-	},
+		createDevice
+	}
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
