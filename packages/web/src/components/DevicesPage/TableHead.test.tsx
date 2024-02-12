@@ -1,6 +1,6 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import TableMenu from "./TableMenu";
+import { expect, test } from "vitest";
 
 // todo: separate the test scenarios via describe & it
 test("renders proper menu controls for table", () => {

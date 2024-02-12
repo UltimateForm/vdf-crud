@@ -3,8 +3,10 @@ import Home from "./components/HomePage/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Devices from "./components/DevicesPage/Devices";
+import { processFruit } from "@vdf/common";
 
 function App() {
+	console.log("HELLOss", processFruit({ name: "Apple", flavor: "bitter" }));
 	return (
 		<div className="App">
 			<Router>

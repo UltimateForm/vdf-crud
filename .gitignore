@@ -2,3 +2,5 @@ node_modules
 .yarn/install-state.gz
 dist
 **/.env
+**/.rollup.cache
+**/out
