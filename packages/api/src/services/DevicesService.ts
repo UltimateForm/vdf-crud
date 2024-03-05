@@ -16,14 +16,14 @@ export class DevicesService {
 		// todo: this is dangerous, handle mapping
 		return device
 			? {
-					...device,
+					...device
 				}
 			: null;
 	}
 
 	async getDevices(
 		limit: IPagination["limit"],
-		skip: IPagination["skip"],
+		skip: IPagination["skip"]
 	): Promise<ICursor<IDevice>> {
 		const result = await this.mongoService.getDevices(limit, skip);
 		return result;
@@ -33,11 +33,11 @@ export class DevicesService {
 		// todo: this is dangerous, handle mapping
 		const timeStampedData: IDevice = {
 			...data,
-			lastConnection: Date.now(),
+			lastConnection: Date.now()
 		};
 		const result = await this.mongoService.createDevice(timeStampedData);
 		return {
-			...result,
+			...result
 		};
 	}
 
@@ -45,11 +45,11 @@ export class DevicesService {
 		// todo: this is dangerous, handle mapping
 		const timeStampedData: Partial<IDevice> = {
 			...data,
-			lastConnection: Date.now(),
+			lastConnection: Date.now()
 		};
 		const result = await this.mongoService.updateDevice(timeStampedData);
 		return {
-			...result,
+			...result
 		};
 	}
 

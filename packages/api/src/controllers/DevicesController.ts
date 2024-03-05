@@ -9,7 +9,7 @@ import {
 	ParseIntPipe,
 	Patch,
 	Post,
-	Query,
+	Query
 } from "@nestjs/common";
 import { ICursor, IDevice } from "interfaces/models";
 import { DevicesService } from "services";
@@ -31,7 +31,7 @@ export class DevicesController {
 	@HttpCode(200)
 	async getDevicesList(
 		@Query("limit", new ParseIntPipe({ optional: true })) limit: number,
-		@Query("skip", new ParseIntPipe({ optional: true })) skip?: number,
+		@Query("skip", new ParseIntPipe({ optional: true })) skip?: number
 	): Promise<ICursor<IDevice>> {
 		const list = await this.devicesService.getDevices(limit ?? 0, skip ?? 0);
 		return list;

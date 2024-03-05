@@ -1,7 +1,8 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
+import { IDevice } from "../device";
 
 @ObjectType()
-export class Device {
+export class Device implements IDevice {
 	@Field()
 	userId: string;
 
@@ -28,4 +29,10 @@ export class Device {
 
 	@Field()
 	phoneNumber: string;
+
+	@Field((type) => Float, { nullable: true })
+	latitude: number;
+
+	@Field((type) => Float, { nullable: true })
+	longitude: number;
 }
