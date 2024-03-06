@@ -29,9 +29,11 @@ export class DevicesService {
 		return result;
 	}
 
-	async createDevice(data: IDevice): Promise<IDevice> {
+	async createDevice(
+		data: Omit<IDevice, "userId" | "lastConnection">
+	): Promise<IDevice> {
 		// todo: this is dangerous, handle mapping
-		const timeStampedData: IDevice = {
+		const timeStampedData: Omit<IDevice, "userId"> = {
 			...data,
 			lastConnection: Date.now()
 		};

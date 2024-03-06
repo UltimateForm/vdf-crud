@@ -25,7 +25,9 @@ export default function TableMenu(props: ITableMenuProps) {
 		// todo: fix double run
 		const pageCountValue = limit == 0 ? 1 : Math.ceil(totalCount / limit);
 		const pageIndexValue =
-			skip == 0 ? 1 : (skip / totalCount) * (totalCount / limit) + 1;
+			skip == 0
+				? 1
+				: Math.round((skip / totalCount) * (totalCount / limit) + 1);
 		return [pageCountValue, pageIndexValue];
 	}, [totalCount, limit, skip]);
 

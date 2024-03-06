@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ArgsType, Field, Int, ObjectType } from "@nestjs/graphql";
 import { ICursor, IPagination } from "../cursor";
-import { Device } from "./device";
+import { DeviceOutput } from "./device";
 
 @ArgsType()
 export class PaginationArgs implements Pick<IPagination, "limit" | "skip"> {
@@ -12,12 +13,12 @@ export class PaginationArgs implements Pick<IPagination, "limit" | "skip"> {
 }
 
 @ObjectType()
-export class DeviceCursor implements ICursor<Device> {
+export class DeviceCursor implements ICursor<DeviceOutput> {
 	@Field((type) => Int)
 	count: number;
 
-	@Field((type) => [Device])
-	items: Device[];
+	@Field((type) => [DeviceOutput])
+	items: DeviceOutput[];
 
 	@Field((type) => Int)
 	limit: number;

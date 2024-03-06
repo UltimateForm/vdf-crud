@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import deviceList from "./features/getDeviceList";
 import createDevice from "./features/createDevice";
+import { devicesApi } from "./api";
 
 export const store = configureStore({
 	reducer: {
 		deviceList,
-		createDevice
-	}
+		createDevice,
+		[devicesApi.reducerPath]: devicesApi.reducer
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(devicesApi.middleware)
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

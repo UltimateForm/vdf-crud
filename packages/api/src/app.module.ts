@@ -8,6 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { GraphQLModule } from "@nestjs/graphql";
 import { join } from "path";
 import { DevicesResolver } from "resolvers/DevicesResolver";
+import { BigIntResolver, VoidResolver } from "graphql-scalars";
 
 @Module({
 	imports: [
@@ -23,7 +24,11 @@ import { DevicesResolver } from "resolvers/DevicesResolver";
 		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
-			autoSchemaFile: join(process.cwd(), "src/schema.gql")
+			autoSchemaFile: join(process.cwd(), "src/schema.gql"),
+			resolvers: {
+				BigInt: BigIntResolver,
+				Void: VoidResolver
+			}
 		})
 	],
 	controllers: [DevicesController],

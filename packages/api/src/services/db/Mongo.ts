@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectConnection } from "@nestjs/mongoose";
-import { IDeviceDocument } from "interfaces/db";
+import { IDeviceBaseDocument, IDeviceDocument } from "interfaces/db";
 import { ICursor } from "interfaces/models";
 import mongoose, { Connection } from "mongoose";
 
@@ -19,17 +19,17 @@ export class MongoService {
 				parentOrg: String,
 				role: String,
 				type: String,
-				phoneNumber: String,
+				phoneNumber: String
 			},
 			{
 				virtuals: {
 					userId: {
 						get() {
 							return this._id;
-						},
-					},
-				},
-			},
+						}
+					}
+				}
+			}
 		);
 		this.Device = connection.model("Device", deviceSchema);
 	}
@@ -46,7 +46,7 @@ export class MongoService {
 			parentOrg: dbData.parentOrg,
 			role: dbData.role,
 			type: dbData.type,
-			phoneNumber: dbData.phoneNumber,
+			phoneNumber: dbData.phoneNumber
 		};
 	}
 
@@ -58,7 +58,7 @@ export class MongoService {
 
 	async getDevices(
 		limit: number,
-		skip: number,
+		skip: number
 	): Promise<ICursor<IDeviceDocument>> {
 		const result = await this.Device.find({}, null, { skip, limit });
 		const totalCount = await this.Device.countDocuments();
@@ -67,11 +67,11 @@ export class MongoService {
 			skip,
 			count: result.length,
 			totalCount: totalCount,
-			items: result.map(this.sanitizeDocument),
+			items: result.map(this.sanitizeDocument)
 		};
 	}
 
-	async createDevice(payload: IDeviceDocument): Promise<IDeviceDocument> {
+	async createDevice(payload: IDeviceBaseDocument): Promise<IDeviceDocument> {
 		// todo: this is a no no
 		const document = new this.Device({ ...payload });
 		document.isNew = true;
@@ -80,12 +80,12 @@ export class MongoService {
 	}
 
 	async updateDevice(
-		payload: Partial<IDeviceDocument>,
+		payload: Partial<IDeviceDocument>
 	): Promise<IDeviceDocument> {
 		const result = await this.Device.findByIdAndUpdate(
 			payload.userId,
 			{ ...payload },
-			{ new: true },
+			{ new: true }
 		);
 		return this.sanitizeDocument(result);
 	}
