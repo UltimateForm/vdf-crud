@@ -10,6 +10,7 @@ import { createPortal } from "react-dom";
 import CreationForm from "./CreationForm";
 import classNames from "classnames";
 import DetailsView from "../common/DetailsView";
+import { useGetDevicesQuery } from "store/api";
 
 const PAGE_SIZES = [5, 10, 15, 25];
 const TABLE_HEAD = [
@@ -52,13 +53,16 @@ export default function Devices() {
 	const [creationFormOpen, setCreationFormOpen] = React.useState(false);
 	const [detailsId, setDetailsId] = React.useState("");
 	const dispatch = useAppDispatch();
-	const deviceList = useStoreSelector((store) => store.deviceList);
-	React.useEffect(() => {
-		(async function () {
-			await dispatch(getDeviceList({ limit: pageSize, skip: itemSkip }));
-		})();
-	}, [pageSize, itemSkip]);
-	const deviceListData = deviceList.data;
+	const {
+		data: deviceListData,
+		isError,
+		isFetching,
+		refetch
+	} = useGetDevicesQuery({
+		limit: pageSize,
+		skip: itemSkip
+	});
+	console.log("Here result", deviceListData);
 
 	const navigate = React.useCallback(
 		(delta: -1 | 1) => {
@@ -69,6 +73,7 @@ export default function Devices() {
 		},
 		[deviceListData, pageSize, itemSkip]
 	);
+	// replace this with cache invalidation
 	const submitDevice = React.useCallback(
 		async (values: IDevice) => {
 			if (!values) return;
@@ -81,7 +86,7 @@ export default function Devices() {
 	return (
 		<div className="p-2 w-full bg-white my-2 card rounded-md grid-flow-row gap-3 relative">
 			<h1 className="text-2xl font-bold text-right">Devices</h1>
-			{deviceList.status == "pending" && (
+			{isFetching && (
 				<div className="absolute inset-0 bg-black z-10 bg-opacity-45 flex">
 					<FontAwesomeIcon
 						icon={faSpinner}
@@ -149,7 +154,7 @@ export default function Devices() {
 						</th>
 					))}
 				</tr>
-				{deviceList.data?.items?.map((device) => (
+				{deviceListData?.items?.map((device) => (
 					<DeviceRow
 						key={device.userId}
 						item={device}
