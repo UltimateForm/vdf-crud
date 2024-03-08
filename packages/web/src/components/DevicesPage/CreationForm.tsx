@@ -6,10 +6,10 @@ import { Field, FieldRenderProps, Form } from "react-final-form";
 import { IDevice } from "types";
 // import classNames from "classnames";
 
-function TextInputField(
+function BasicInput(
 	props: FieldRenderProps<any, HTMLElement, any> & { label: string }
 ) {
-	const { input, meta, label } = props;
+	const { input, meta, label, type } = props;
 	return (
 		<div className="grid gap-1">
 			<label
@@ -21,7 +21,7 @@ function TextInputField(
 				{label}
 			</label>
 			<input
-				type="text"
+				type={type}
 				{...input}
 				placeholder={label}
 				className="input input-bordered w-full max-w-xs"
@@ -102,31 +102,27 @@ export default function CreationForm(props: ICreationFormProps) {
 						<div className="grid grid-flow-col gap-2">
 							<Field
 								name="firstName"
-								render={(props) => (
-									<TextInputField label="First Name" {...props} />
-								)}
+								render={(props) => <BasicInput label="First Name" {...props} />}
 							/>
 							<Field
 								name="lastName"
-								render={(props) => (
-									<TextInputField label="Last Name" {...props} />
-								)}
+								render={(props) => <BasicInput label="Last Name" {...props} />}
 							/>
 						</div>
 						<div className="grid grid-flow-col gap-2">
 							<Field
 								name="latitude"
 								type="number"
-								render={(props) => (
-									<TextInputField label="Latitude" {...props} />
-								)}
+								parse={(value) => Number.parseFloat(value)}
+								format={(value) => value?.toString()}
+								render={(props) => <BasicInput label="Latitude" {...props} />}
 							/>
 							<Field
 								name="longitude"
 								type="number"
-								render={(props) => (
-									<TextInputField label="Longitude" {...props} />
-								)}
+								parse={(value) => Number.parseFloat(value)}
+								format={(value) => value?.toString()}
+								render={(props) => <BasicInput label="Longitude" {...props} />}
 							/>
 						</div>
 
@@ -138,9 +134,7 @@ export default function CreationForm(props: ICreationFormProps) {
 						/>
 						<Field
 							name="parentOrg"
-							render={(props) => (
-								<TextInputField label="Parent Org" {...props} />
-							)}
+							render={(props) => <BasicInput label="Parent Org" {...props} />}
 						/>
 						<div className="grid grid-flow-col gap-2">
 							<Field
@@ -169,9 +163,7 @@ export default function CreationForm(props: ICreationFormProps) {
 
 						<Field
 							name="phoneNumber"
-							render={(props) => (
-								<TextInputField label="Phone Number" {...props} />
-							)}
+							render={(props) => <BasicInput label="Phone Number" {...props} />}
 						/>
 						<button className="btn btn-neutral" type="submit">
 							Submit

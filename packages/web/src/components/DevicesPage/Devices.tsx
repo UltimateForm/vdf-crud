@@ -1,8 +1,5 @@
 import React from "react";
 import TableMenu from "./TableMenu";
-import { useAppDispatch, useStoreSelector } from "store/hooks";
-import { getDeviceList } from "store/features/getDeviceList";
-import { createDevice } from "store/features/createDevice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { IDevice } from "types";
@@ -10,7 +7,7 @@ import { createPortal } from "react-dom";
 import CreationForm from "./CreationForm";
 import classNames from "classnames";
 import DetailsView from "../common/DetailsView";
-import { useGetDevicesQuery } from "store/api";
+import { useCreateDeviceMutation, useDevicesQuery } from "store/api/enhanced";
 
 const PAGE_SIZES = [5, 10, 15, 25];
 const TABLE_HEAD = [
@@ -52,18 +49,17 @@ export default function Devices() {
 	const [itemSkip, setItemSkip] = React.useState(0);
 	const [creationFormOpen, setCreationFormOpen] = React.useState(false);
 	const [detailsId, setDetailsId] = React.useState("");
-	const dispatch = useAppDispatch();
 	const {
-		data: deviceListData,
+		data: devicesQueryData,
 		isError,
 		isFetching,
 		refetch
-	} = useGetDevicesQuery({
+	} = useDevicesQuery({
 		limit: pageSize,
 		skip: itemSkip
 	});
-	console.log("Here result", deviceListData);
-
+	const [createDevice, createdDeviceResponse] = useCreateDeviceMutation();
+	const deviceListData = devicesQueryData?.devices;
 	const navigate = React.useCallback(
 		(delta: -1 | 1) => {
 			if (delta == 1 && itemSkip + pageSize >= deviceListData.totalCount)
@@ -77,16 +73,18 @@ export default function Devices() {
 	const submitDevice = React.useCallback(
 		async (values: IDevice) => {
 			if (!values) return;
-			await dispatch(createDevice(values));
+			console.log("HER my devices", values);
+			createDevice({
+				...values
+			});
 			setCreationFormOpen(false);
-			await dispatch(getDeviceList({ limit: pageSize, skip: itemSkip }));
 		},
 		[pageSize, itemSkip]
 	);
 	return (
 		<div className="p-2 w-full bg-white my-2 card rounded-md grid-flow-row gap-3 relative">
 			<h1 className="text-2xl font-bold text-right">Devices</h1>
-			{isFetching && (
+			{(isFetching || createdDeviceResponse.isLoading) && (
 				<div className="absolute inset-0 bg-black z-10 bg-opacity-45 flex">
 					<FontAwesomeIcon
 						icon={faSpinner}
@@ -135,7 +133,7 @@ export default function Devices() {
 			)}
 			<TableMenu
 				limit={deviceListData?.limit ?? 0}
-				count={deviceListData?.count ?? 0}
+				count={deviceListData?.totalCount ?? 0}
 				skip={deviceListData?.skip ?? 0}
 				totalCount={deviceListData?.totalCount ?? 0}
 				setSize={(size) => {

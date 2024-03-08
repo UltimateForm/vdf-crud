@@ -1,0 +1,25 @@
+mutation createDevice($firstName: String!, $lastName: String!, $description: String!, $parentOrg: String!, $role: String!, $type: String!, $phoneNumber: String!, $latitude: Float, $longitude: Float) {
+    createDevice(
+        firstName:$firstName, 
+        lastName:$lastName, 
+        description:$description,
+        parentOrg:$parentOrg,
+        role:$role,
+        type:$type,
+        phoneNumber:$phoneNumber,
+        latitude:$latitude,
+        longitude:$longitude
+    ){
+        userId
+        firstName
+        lastName
+        description
+        lastConnection
+				phoneNumber
+        parentOrg
+        role
+        type
+        latitude
+        longitude
+    }
+}

@@ -1,0 +1,20 @@
+query devices($skip: Int, $limit: Int) {
+    devices(limit: $limit, skip: $skip){
+        limit
+        totalCount
+        skip
+        items {
+            userId
+            firstName
+            lastName
+            description
+            lastConnection
+            parentOrg
+            phoneNumber
+            role
+            type
+            latitude
+            longitude
+        }
+    }
+}

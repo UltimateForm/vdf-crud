@@ -1,21 +1,17 @@
 import React from "react";
 import Maps from "./Maps";
-import { getDeviceList } from "store/features/getDeviceList";
-import { useAppDispatch, useStoreSelector } from "store/hooks";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
 import DetailsView from "components/common/DetailsView";
+import { useDevicesQuery } from "store/api/generated";
 
 export default function Home({}) {
 	const [detailsId, setDetailsId] = React.useState("");
-	const dispatch = useAppDispatch();
-	const deviceList = useStoreSelector((store) => store.deviceList);
-	const deviceListData = deviceList.data;
-	React.useEffect(() => {
-		(async function () {
-			await dispatch(getDeviceList({ limit: null, skip: 0 }));
-		})();
-	}, []);
+	const { data: deviceQueryData } = useDevicesQuery({
+		limit: 0,
+		skip: 0
+	});
+	const deviceListData = deviceQueryData?.devices;
 	return (
 		<div className="p-2 w-full bg-white my-2 card rounded-md grid-flow-row gap-3 h-fit">
 			<h1 className="text-2xl font-bold text-right">Home</h1>
@@ -42,7 +38,7 @@ export default function Home({}) {
 				onSelect={(id) => {
 					return setDetailsId(id);
 				}}
-				markers={deviceList.data?.items
+				markers={deviceListData?.items
 					?.filter((dev) => dev.latitude && dev.longitude)
 					.map((dev) => ({
 						latitude: dev.latitude,
